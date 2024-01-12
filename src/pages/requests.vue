@@ -1,5 +1,0 @@
-<template>
-  <div>
-    <h1>requests</h1>
-  </div>
-</template>
