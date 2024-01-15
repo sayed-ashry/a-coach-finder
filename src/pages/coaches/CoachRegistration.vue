@@ -1,1 +1,3 @@
-<template>REGISTER</template>
+<template>
+  REGISTER
+</template>
