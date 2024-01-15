@@ -4,13 +4,14 @@
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
+import TheHeader from "./components/layout/TheHeader.vue";
 
 export default {
+  name: "App",
   components: {
-    TheHeader
-  }  
-}
+    TheHeader,
+  },
+};
 </script>
 
 <style>
