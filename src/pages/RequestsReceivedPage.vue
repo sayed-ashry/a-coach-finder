@@ -1,3 +1,3 @@
 <template>
-    requests recived page
+  REQUESTS
 </template>

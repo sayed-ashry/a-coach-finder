@@ -1,24 +1,34 @@
 import { createStore } from "vuex";
+const coaches = [
+  {
+    id: "c1",
+    firstName: "Maximilian",
+    lastName: "Schwarzmüller",
+    areas: ["frontend", "backend", "career"],
+    description:
+      "I'm Maximilian and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
+    hourlyRate: 30,
+  },
+  {
+    id: "c2",
+    firstName: "Julie",
+    lastName: "Jones",
+    areas: ["frontend", "career"],
+    description:
+      "I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
+    hourlyRate: 30,
+  },
+];
 
 const store = createStore({
   state() {
     return {
-      counter: 100,
+      coaches: coaches,
     };
   },
-  mutations: {
-    add(state) {
-      return (state.counter = state.counter + 1);
-    },
-  },
   getters: {
-    counter(state) {
-      return state.counter;
-    },
-  },
-  actions: {
-    add(context) {
-      context.commit("add");
+    coaches(state) {
+      return state.coaches;
     },
   },
 });

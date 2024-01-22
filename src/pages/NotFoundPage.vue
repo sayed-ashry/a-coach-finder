@@ -1,3 +1,3 @@
 <template>
-    not found page
+    NOT FOUND
 </template>
