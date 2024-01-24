@@ -18,6 +18,15 @@ const coaches = [
       "I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
     hourlyRate: 30,
   },
+  {
+    id: "c3",
+    firstName: "Sayed",
+    lastName: "Ashry",
+    areas: ["frontend", "backend"],
+    description:
+      "I am Sayed and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
+    hourlyRate: 40,
+  },
 ];
 
 const store = createStore({
@@ -29,6 +38,9 @@ const store = createStore({
   getters: {
     coaches(state) {
       return state.coaches;
+    },
+    hasCoaches(state) {
+      return state.coaches && state.coaches.length > 0;
     },
   },
 });
