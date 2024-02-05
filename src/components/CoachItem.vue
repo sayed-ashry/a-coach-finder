@@ -20,9 +20,7 @@
 </template>
 
 <script>
-import BaseBadge from "./BaseBadge.vue";
 export default {
-  components:{BaseBadge},
   props: ["coach"],
   computed: {
     fullName() {

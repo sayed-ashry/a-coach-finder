@@ -5,11 +5,13 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", redirect: "/coaches" },
+
     { path: "/coaches", component: CoachesList },
+
     {
       path: "/coaches/:id",
-
       component: () => import("./pages/CoachDetailPage.vue"),
+      props: true,
       children: [
         {
           path: "contact",
@@ -17,6 +19,7 @@ const router = createRouter({
         },
       ],
     },
+
     {
       path: "/register",
       component: () => import("./pages/CoachRegistrationPage.vue"),

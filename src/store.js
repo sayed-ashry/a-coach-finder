@@ -33,6 +33,8 @@ const store = createStore({
   state() {
     return {
       coaches: coaches,
+      requests: [],
+      userId: "c4",
     };
   },
   getters: {
@@ -41,6 +43,51 @@ const store = createStore({
     },
     hasCoaches(state) {
       return state.coaches && state.coaches.length > 0;
+    },
+    userId(state) {
+      return state.userId;
+    },
+    isCoach(state) {
+      const coaches = state.coaches;
+      const userId = state.userId;
+      return coaches.some((coach) => coach.id === userId);
+    },
+    requests(state, getters) {
+      const coachId = getters.userId;
+      return state.requests.filter((req) => req.coachId === coachId);
+    },
+    hasRequests(getters) {
+      return getters.requests && getters.requests.length > 0;
+    },
+  },
+  mutations: {
+    addCoach(state, payload) {
+      state.coaches.push(payload);
+    },
+    addRequest(state, payload) {
+      console.log(payload);
+      state.requests.push(payload);
+    },
+  },
+  actions: {
+    addCoach(context, data) {
+      context.commit("addCoach", {
+        id: context.getters.userId,
+        firstName: data.first,
+        lastName: data.last,
+        areas: data.areas,
+        description: data.desc,
+        hourlyRate: data.rate,
+      });
+    },
+    addRequest(context, payload) {
+      const newRequest = {
+        id: new Date().toISOString(),
+        coachId: payload.coachId,
+        userEmail: payload.email,
+        message: payload.message,
+      };
+      context.commit("addRequest", newRequest);
     },
   },
 });
