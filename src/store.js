@@ -1,38 +1,9 @@
 import { createStore } from "vuex";
-const coaches = [
-  {
-    id: "c1",
-    firstName: "Maximilian",
-    lastName: "Schwarzmüller",
-    areas: ["frontend", "backend", "career"],
-    description:
-      "I'm Maximilian and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
-    hourlyRate: 30,
-  },
-  {
-    id: "c2",
-    firstName: "Julie",
-    lastName: "Jones",
-    areas: ["frontend", "career"],
-    description:
-      "I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
-    hourlyRate: 30,
-  },
-  {
-    id: "c3",
-    firstName: "Sayed",
-    lastName: "Ashry",
-    areas: ["frontend", "backend"],
-    description:
-      "I am Sayed and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
-    hourlyRate: 40,
-  },
-];
 
 const store = createStore({
   state() {
     return {
-      coaches: coaches,
+      coaches: [],
       requests: [],
       userId: "c4",
     };
@@ -68,17 +39,57 @@ const store = createStore({
       console.log(payload);
       state.requests.push(payload);
     },
+    setCoaches(state, payload) {
+      state.coaches = payload;
+    },
   },
   actions: {
-    addCoach(context, data) {
-      context.commit("addCoach", {
-        id: context.getters.userId,
+    async addCoach(context, data) {
+      const userId = context.getters.userId;
+      const coachData = {
+        id: userId,
         firstName: data.first,
         lastName: data.last,
         areas: data.areas,
         description: data.desc,
         hourlyRate: data.rate,
-      });
+      };
+      const response = await fetch(
+        `https://find-a-coach-11550-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+        {
+          method: "PUT",
+          body: JSON.stringify(coachData),
+        }
+      );
+      const reponseData = await response.json();
+      console.log(reponseData);
+      if (!response.ok) {
+        //error handle..
+      }
+      context.commit("addCoach", coachData);
+    },
+    async loadCoaches(context) {
+      const response = await fetch(
+        " https://find-a-coach-11550-default-rtdb.firebaseio.com/coaches.json"
+      );
+      const reponseData = await response.json();
+      if (!response.ok) {
+        const error = new Error(reponseData.message || "Faild to fetch.");
+        throw error;
+      }
+      const coaches = [];
+      for (const key in reponseData) {
+        const coach = {
+          id: key,
+          firstName: reponseData[key].firstName,
+          lastName: reponseData[key].lastName,
+          areas: reponseData[key].areas,
+          description: reponseData[key].description,
+          hourlyRate: reponseData[key].hourlyRate,
+        };
+        coaches.push(coach);
+      }
+      context.commit("setCoaches", coaches);
     },
     addRequest(context, payload) {
       const newRequest = {
