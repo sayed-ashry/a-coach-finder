@@ -6,6 +6,7 @@ import actions from "./actions";
 const store = createStore({
   state() {
     return {
+      lastFetch: null,
       coaches: [],
       requests: [],
       userId: "c4",
