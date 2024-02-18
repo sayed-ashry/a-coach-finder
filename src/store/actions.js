@@ -17,25 +17,21 @@ export default {
       }
     );
     const reponseData = await response.json();
-    console.log(reponseData);
+
     if (!response.ok) {
-      const error = new Error(reponseData.message || "Faild to send data.");
-      throw error;
+      throw new Error(reponseData.message || "Faild to send data.");
     }
     context.commit("addCoach", coachData);
   },
-  async loadCoaches(context, payload) {
-    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
-      return;
-    }
+  async loadCoaches(context) {
     const response = await fetch(
       "https://find-a-coach-11550-default-rtdb.firebaseio.com/coaches.json"
     );
     const reponseData = await response.json();
     if (!response.ok) {
-      const error = new Error(reponseData.message || "Faild to fetch.");
-      throw error;
+      throw new Error(reponseData.message || "Faild to fetch.");
     }
+
     const coaches = [];
     for (const key in reponseData) {
       const coach = {
@@ -49,7 +45,6 @@ export default {
       coaches.push(coach);
     }
     context.commit("setCoaches", coaches);
-    context.commit("setFetchTimeStamp");
   },
   async addRequest(context, payload) {
     const newRequest = {
@@ -64,8 +59,7 @@ export default {
       }
     );
     if (!response.ok) {
-      const error = new Error(reponseData.message || "Faild to send request.");
-      throw error;
+      throw new Error(reponseData.message || "Faild to send request.");
     }
     const reponseData = await response.json();
     newRequest.id = reponseData.name;
@@ -81,10 +75,7 @@ export default {
     const reponseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(
-        reponseData.message || "Faild to fetch requests."
-      );
-      throw error;
+      throw new Error(reponseData.message || "Faild to fetch requests.");
     }
     const requests = [];
     for (const key in reponseData) {

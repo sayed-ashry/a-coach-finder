@@ -1,4 +1,5 @@
 <template>
+  
   <form @submit.prevent="submitForm">
     <div class="form-control">
       <label for="email">Your E-mail</label>
@@ -13,6 +14,7 @@
       <base-button>Send Message</base-button>
     </div>
   </form>
+
 </template>
 <script>
 export default {

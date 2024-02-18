@@ -4,7 +4,7 @@
       <h2>Register as a coach now!</h2>
       <form @submit.prevent="submitForm">
         <div class="form-control" :class="{ invalid: !firstName.isValid }">
-          <label for="firstname">Firstname</label>
+          <label for="firstname">First name</label>
           <input
             type="text"
             id="firstname"
@@ -15,7 +15,7 @@
         </div>
 
         <div class="form-control" :class="{ invalid: !lastName.isValid }">
-          <label for="lastName">Lastname</label>
+          <label for="lastName">Last name</label>
           <input
             type="text"
             id="lastName"

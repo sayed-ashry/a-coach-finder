@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div v-if="show" @click="tryClose" class="backdrop"></div>
+    <div class="backdrop" v-if="show" @click="tryClose"></div>
     <transition name="dialog">
       <dialog open v-if="show">
         <header>
@@ -75,7 +75,6 @@ dialog {
   overflow: hidden;
   background-color: white;
 }
-
 header {
   background-color: #3a0061;
   color: white;
@@ -103,11 +102,11 @@ menu {
   transform: scale(0.8);
 }
 .dialog-enter-active {
-  transition:  all 0.3s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .dialog-leave-active {
-  transition:  all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
 .dialog-enter-to,
 .dialog-leave-from {
