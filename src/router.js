@@ -32,8 +32,8 @@ const router = createRouter({
       path: "/:notFound(.*)",
       component: () => import("./pages/NotFoundPage.vue"),
     },
-    // { path: "/auth", component: () => import("./pages/UserAuth.vue") },
-    {path:'/auth',component:()=>import('./pages/UserAuth.vue')}
+
+    { path: "/auth", component: () => import("./pages/UserAuth.vue") },
   ],
 });
 

@@ -89,4 +89,50 @@ export default {
     }
     context.commit("setRequests", requests);
   },
+  async login(context, payload) {
+    const response = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBb5TtbpiGEk3uYManOT0yMOb-i2JnEp7I",
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        returnSecureToken: true,
+      }
+    );
+    const reponseData = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        reponseData.message || "Failed to authenticate.Check your login data"
+      );
+    }
+    const user = {
+      userId: reponseData.localId,
+      token: reponseData.idToken,
+      tokenExpiration: reponseData.expiresIn,
+    };
+    console.log(user.token);
+    context.commit("setUser", user);
+  },
+  async signup(context, payload) {
+    const response = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBb5TtbpiGEk3uYManOT0yMOb-i2JnEp7I",
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        returnSecureToken: true,
+      }
+    );
+    const reponseData = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        reponseData.message || "Failed to authenticate.Check your login data"
+      );
+    }
+    const user = {
+      userId: reponseData.localId,
+      token: reponseData.idToken,
+      tokenExpiration: reponseData.expiresIn,
+    };
+
+    context.commit("setUser", user);
+  },
 };

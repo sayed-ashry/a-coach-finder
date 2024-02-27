@@ -8,7 +8,9 @@ const store = createStore({
     return {
       coaches: [],
       requests: [],
-      userId: "c4",
+      userId: null,
+      token: null,
+      tokenExpiration: null,
     };
   },
   getters: getters,
