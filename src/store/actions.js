@@ -1,6 +1,7 @@
 export default {
   async addCoach(context, data) {
     const userId = context.getters.userId;
+    const token = context.getters.token;
     const coachData = {
       id: userId,
       firstName: data.first,
@@ -10,19 +11,19 @@ export default {
       hourlyRate: data.rate,
     };
     const response = await fetch(
-      `https://find-a-coach-11550-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+      `https://find-a-coach-11550-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=${token}`,
       {
         method: "PUT",
         body: JSON.stringify(coachData),
       }
     );
     const reponseData = await response.json();
-
     if (!response.ok) {
       throw new Error(reponseData.message || "Faild to send data.");
     }
     context.commit("addCoach", coachData);
   },
+
   async loadCoaches(context) {
     const response = await fetch(
       "https://find-a-coach-11550-default-rtdb.firebaseio.com/coaches.json"
@@ -69,8 +70,9 @@ export default {
 
   async fetchRequests(context) {
     const coachId = context.getters.userId;
+    const token = context.getters.token;
     const response = await fetch(
-      `https://find-a-coach-11550-default-rtdb.firebaseio.com/requests/${coachId}.json`
+      `https://find-a-coach-11550-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`
     );
     const reponseData = await response.json();
 
@@ -109,7 +111,6 @@ export default {
       token: reponseData.idToken,
       tokenExpiration: reponseData.expiresIn,
     };
-    console.log(user.token);
     context.commit("setUser", user);
   },
   async signup(context, payload) {
@@ -134,5 +135,12 @@ export default {
     };
 
     context.commit("setUser", user);
+  },
+  logout(context) {
+    context.commit("setUser", {
+      userId: null,
+      token: null,
+      tokenExpiration: null,
+    });
   },
 };

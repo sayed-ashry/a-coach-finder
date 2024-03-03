@@ -20,4 +20,7 @@ export default {
   hasRequests(getters) {
     return getters.requests && getters.requests.length > 0;
   },
+  isAuthenticated(state) {
+    return !!state.token;
+  },
 };
