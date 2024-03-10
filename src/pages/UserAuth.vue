@@ -74,7 +74,8 @@ export default {
         } else {
           await this.$store.dispatch("signup", user);
         }
-        this.$router.replace('/coaches')
+        const redirectUrl = "/" + (this.$route.query.redirect || "coaches");
+        this.$router.replace(redirectUrl);
       } catch (err) {
         this.error = err.message || "Failed to authenticate.try later";
       }
