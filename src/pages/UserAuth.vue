@@ -74,6 +74,7 @@ export default {
         } else {
           await this.$store.dispatch("signup", user);
         }
+        this.$router.replace('/coaches')
       } catch (err) {
         this.error = err.message || "Failed to authenticate.try later";
       }
