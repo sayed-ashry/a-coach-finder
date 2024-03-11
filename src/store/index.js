@@ -10,7 +10,7 @@ const store = createStore({
       requests: [],
       userId: null,
       token: null,
-      tokenExpiration: null,
+      didAutoLogout: false,
     };
   },
   getters: getters,
